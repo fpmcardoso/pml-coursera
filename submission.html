@@ -60,7 +60,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it.</p>
+<pre><code>    Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it.  </code></pre>
 <p>In this project, we will use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants to predict the manner in which they did the exercise.</p>
 <p>With this data, we should be able to classify the performance of their physical activity as:</p>
 <p>A: exactly according to the exercise specification</p>
@@ -69,7 +69,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>D: lowering the dumbbell only halfway</p>
 <p>E: throwing the hips to the front</p>
 <p>All data and project information is based on the findings and research of the LES Group at PUC-Rio. More info about the project and the data can be found at:</p>
-<p><a href="http://groupware.les.inf.puc-rio.br/har">http://groupware.les.inf.puc-rio.br/har</a></p>
+<pre><code>    http://groupware.les.inf.puc-rio.br/har</code></pre>
 </div>
 <div id="basic-setup" class="section level2">
 <h2>Basic Setup</h2>
@@ -130,15 +130,11 @@ testRaw &lt;- testRaw[, !testRemove]
 testCleaned &lt;- testRaw[, sapply(testRaw, is.numeric)]
 
 dim(testCleaned)</code></pre>
-</div>
-</div>
-<div id="section" class="section level2">
-<h2>[1] 20 53</h2>
+<pre><code>[1] 20 53</code></pre>
 <pre class="r"><code>dim(trainCleaned)</code></pre>
-</div>
-<div id="section-1" class="section level2">
-<h2>[1] 19622 53</h2>
+<pre><code>[1] 19622    53</code></pre>
 <p>The cleaned training dataset contains 19622 observations and 53 variables and the testing dataset contains 20 observations and 53 variables.</p>
+</div>
 <div id="training-and-validation-datasets" class="section level3">
 <h3>Training and validation datasets</h3>
 <p>We should split the training set in 2 parts: a pure training dataset consisting of 70% of the data and a validation dataset with the remaining 30%. The validation dataset will be used in cross validation in the next steps.</p>
@@ -162,22 +158,22 @@ modelRf &lt;- train(classe ~ ., data=trainData, method=&quot;rf&quot;, trControl
 <pre><code>Random Forest 
 
 13737 samples
-   52 predictor
-    5 classes: 'A', 'B', 'C', 'D', 'E' 
+52 predictor
+5 classes: 'A', 'B', 'C', 'D', 'E' 
 
 No pre-processing
 Resampling: Cross-Validated (5 fold) 
 Summary of sample sizes: 10990, 10988, 10991, 10990, 10989 
 Resampling results across tuning parameters:
-
-  mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
-   2    0.9914828  0.9892255  0.001659687  0.002099744
-  27    0.9922110  0.9901471  0.001577078  0.001994300
-  52    0.9879158  0.9847138  0.003680413  0.004654061
+        
+        mtry  Accuracy   Kappa      Accuracy SD  Kappa SD   
+2    0.9914828  0.9892255  0.001659687  0.002099744
+27    0.9922110  0.9901471  0.001577078  0.001994300
+52    0.9879158  0.9847138  0.003680413  0.004654061
 
 Accuracy was used to select the optimal model using  the largest value.
 The final value used for the model was mtry = 27.</code></pre>
-<p>We then use the validation data (the 30% from the original training set) to determine wether the model is accurate enough or not - and we draw a confusion matrix to evaluate its results.</p>
+<p>We then use the validation data (the 30% from the original training set) to determine whether the model is accurate enough or not - and we draw a confusion matrix to evaluate its results.</p>
 <pre class="r"><code>predictRf &lt;- predict(modelRf, testData)
 
 confusionMatrix(testData$classe, predictRf)
@@ -186,27 +182,27 @@ accuracy &lt;- postResample(predictRf, testData$classe)
 accuracy</code></pre>
 <pre><code>Confusion Matrix and Statistics
 
-          Reference
+Reference
 Prediction    A    B    C    D    E
-         A 1674    0    0    0    0
-         B   10 1128    1    0    0
-         C    0    4 1018    4    0
-         D    0    1    6  956    1
-         E    0    0    2    4 1076
+A 1674    0    0    0    0
+B   10 1128    1    0    0
+C    0    4 1018    4    0
+D    0    1    6  956    1
+E    0    0    2    4 1076
 
 Overall Statistics
-                                          
-               Accuracy : 0.9944          
-                 95% CI : (0.9921, 0.9961)
-    No Information Rate : 0.2862          
-    P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
-                                          
-                  Kappa : 0.9929          
- Mcnemar's Test P-Value : NA              
+
+Accuracy : 0.9944          
+95% CI : (0.9921, 0.9961)
+No Information Rate : 0.2862          
+P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+
+Kappa : 0.9929          
+Mcnemar's Test P-Value : NA              
 
 Statistics by Class:
 
-                     Class: A Class: B Class: C Class: D Class: E
+Class: A Class: B Class: C Class: D Class: E
 Sensitivity            0.9941   0.9956   0.9912   0.9917   0.9991
 Specificity            1.0000   0.9977   0.9984   0.9984   0.9988
 Pos Pred Value         1.0000   0.9903   0.9922   0.9917   0.9945
