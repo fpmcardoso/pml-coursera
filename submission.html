@@ -220,9 +220,9 @@ out_sample_error</code></pre>
 <pre><code>[1] 0.005607477</code></pre>
 <p>With and estimated accuracy at 99.43% and out-of-sample error at 0.56%, we should be confident in our model. The next step is to use our original test data to classify new observations.</p>
 </div>
-<div id="final-step-classification-with-the-test-dataset" class="section level2">
-<h2>Final step: classification with the test dataset</h2>
-<p>We will use the original testing dataset we download at the beginning.</p>
+<div id="final-step-classifying---new-data" class="section level2">
+<h2>Final step: classifying - new data</h2>
+<p>We will use the original testing dataset we downloaded at the beginning of this project.</p>
 <pre class="r"><code>result &lt;- predict(modelRf, testCleaned[, -length(names(testCleaned))])
 result</code></pre>
 <pre><code>[1] B A B A A E D B A A B C B A E E A B B B</code></pre>
